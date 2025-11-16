@@ -1,0 +1,9 @@
+@use 'colors' as *;
+
+h1 {
+  color: $primary-green;
+}
+
+h3 {
+  color: $primary-green-dark;
+}

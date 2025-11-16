@@ -1,0 +1,59 @@
+@use 'colors' as *;
+
+/* CLEAN WHITE MODERN NAVBAR (NO GREEN TINT) */
+.skillupx-nav {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 1000;
+
+  /* Light white glass effect */
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+
+  border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+  box-shadow: 0 2px 12px rgba(0,0,0,0.05);
+
+  .navbar-brand {
+    font-size: 1.35rem;
+    color: $primary-green-dark !important;
+    
+    .logo {
+      height: 38px;
+    }
+  }
+
+  .nav-link {
+    font-weight: 500;
+    margin-right: 18px;
+    color: $text-dark !important;
+    opacity: 0.75;
+    transition: all 0.25s ease;
+
+    &:hover {
+      opacity: 1;
+      color: $primary-green !important; /* green theme hover */
+    }
+  }
+
+  .btn-primary {
+    background: $primary-green;
+    border: none;
+    padding: 8px 20px;
+    border-radius: 8px;
+    color: $white;
+    font-weight: 500;
+
+    &:hover {
+      background: $primary-green-dark;
+    }
+  }
+}
+
+/* Solid on scroll */
+.sticky-nav {
+  background: rgba(255, 255, 255, 1) !important;
+  backdrop-filter: blur(4px);
+  box-shadow: 0 4px 20px rgba(0,0,0,0.12);
+}

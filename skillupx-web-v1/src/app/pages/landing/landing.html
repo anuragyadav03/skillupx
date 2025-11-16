@@ -1,0 +1,140 @@
+<!-- HERO SECTION -->
+<!-- HERO SECTION -->
+ <app-lead-modal (submitted)="submitLead($event)"></app-lead-modal>
+<section class="hero container-fluid d-flex justify-content-center align-items-center">
+  <div class="hero-content text-center text-white">
+
+    <h1 class="fw-bold display-4 mb-3 animate-fade">
+      Transform Your Career with 1-on-1 Mentorship
+    </h1>
+
+    <p class="lead mb-4 animate-fade-delay">
+      SkillupX gives you personalized learning with <strong>One-on-One</strong> mentorship  
+      and <strong>5-student Mini Batches</strong> for Python, AWS, DevOps, MERN & MEAN.
+    </p>
+
+    <!-- NEW HIGHLIGHTS -->
+    <div class="hero-highlights d-flex justify-content-center gap-4 mb-4 animate-rise">
+      <div><span class="highlight-icon">✔</span> Personal Mentor</div>
+      <div><span class="highlight-icon">✔</span> Real Projects</div>
+      <div><span class="highlight-icon">✔</span> Rich Study Resources</div>
+    </div>
+
+    <div class="d-flex justify-content-center gap-3 animate-rise">
+      <button class="btn cta-btn btn-lg px-4" (click)="openLeadModal()">Request a Call Back</button>
+    </div>
+
+  </div>
+</section>
+
+
+
+<!-- WHY SECTION -->
+<section class="features container py-5">
+  <h2 class="text-center fw-bold mb-5">Why Choose SkillupX?</h2>
+
+  <div class="row g-4">
+    <div class="col-md-6">
+      <div class="card feature-card h-100">
+        <div class="card-body">
+          <h4 class="fw-bold mb-3">1-on-1 Mentorship</h4>
+          <p>A dedicated mentor guides you personally until course completion.</p>
+          <ul>
+            <li>Daily Doubt Clearing Session Window (Flexible)</li>
+            <li>Regular Assessments + Specialized Mentor Projects</li>
+            <li>Work Together With Your Mentor On a <strong>Project Idea of Your Own</strong></li>
+            <li><strong>3 Interview Opportunities</strong> for Tech Roles <strong>( arranged by SkillUpX Team )</strong></li>
+          </ul>
+          <!-- <p class="price-tag mt-3 fw-bold">₹30,000</p> -->
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-6">
+      <div class="card feature-card h-100">
+        <div class="card-body">
+          <h4 class="fw-bold mb-3">Mini Batch (5 Students)</h4>
+          <p>Learn together in a small, interactive group of 5 students.</p>
+          <ul>
+            <li>Weekly Doubt Clearing Session</li>
+            <li>Flexible timings + Regular Assessments</li>
+            <li>Access to Peer Learning Groups</li>
+            <li><strong>2 Interview Opportunities</strong> for Tech Roles <strong>( arranged by SkillUpX Team )</strong></li>
+          </ul>
+          <!-- <p class="price-tag mt-3 fw-bold">₹18,000</p> -->
+        </div>
+      </div>
+    </div>
+
+    <!-- <div class="col-md-4">
+      <div class="card feature-card h-100">
+        <div class="card-body">
+          <h4 class="fw-bold mb-3">Resource-rich LMS</h4>
+          <p>Slides, videos, notes, quizzes, images, assignments & chat lounge.</p>
+        </div>
+      </div>
+    </div> -->
+  </div>
+</section>
+
+
+<!-- COURSES -->
+<section class="container py-5">
+  <h2 class="text-center fw-bold mb-5">Our Courses</h2>
+
+  <div class="row g-4">
+    <div class="col-md-3">
+      <div class="card course-card h-100">
+        <div class="card-body">
+          <h5 class="fw-bold">Python Mastery</h5>
+          <p>
+            From basics to advanced. OOP, Pandas, File Handling, APIs & Automation.
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-3">
+      <div class="card course-card h-100">
+        <div class="card-body">
+          <h5 class="fw-bold">AWS Cloud</h5>
+          <p>
+            EC2, S3, VPC, RDS, Lambda, IAM, Load Balancer, Auto Scaling & Projects.
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-3">
+      <div class="card course-card h-100">
+        <div class="card-body">
+          <h5 class="fw-bold">DevOps Engineer</h5>
+          <p>
+            Jenkins, Docker, Kubernetes, Terraform, CI/CD, Monitoring & More.
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-3">
+      <div class="card course-card h-100">
+        <div class="card-body">
+          <h5 class="fw-bold">Full-Stack MERN / MEAN</h5>
+          <p>
+            HTML, CSS, JS, React/Angular, Node, Express, MongoDB & Deployments.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- CTA SECTION -->
+<section class="cta-section text-center text-white">
+  <div class="container py-5">
+    <h2 class="fw-bold mb-3">Start Your Learning Journey Today!</h2>
+    <p class="mb-4">Join SkillupX and learn with personalized mentorship & real-world projects.</p>
+    <button class="btn cta-btn btn-lg px-4" (click)="openLeadModal()">Request a Call Back</button>
+  </div>
+</section>

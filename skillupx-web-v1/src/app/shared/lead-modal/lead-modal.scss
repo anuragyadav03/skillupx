@@ -1,0 +1,104 @@
+@use 'colors' as *;
+
+.modal-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.65);
+  backdrop-filter: blur(6px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 3000;
+}
+
+.modal-box {
+  background: white;
+  width: 95%;
+  max-width: 450px;
+  padding: 30px;
+  border-radius: 18px;
+  box-shadow: 0px 10px 40px rgba(0,0,0,0.25);
+  position: relative;
+  animation: fadeInUp 0.35s ease both;
+}
+
+.close-btn {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  font-size: 1.3rem;
+  background: transparent;
+  border: none;
+  color: #444;
+  cursor: pointer;
+  transition: 0.2s;
+
+  &:hover {
+    color: $primary-green-dark;
+  }
+}
+
+/* Inputs */
+.input-field {
+  border-radius: 10px;
+  padding: 10px 14px;
+  border: 1px solid #ddd;
+
+  &:focus {
+    outline: none;
+    border-color: $primary-green;
+    box-shadow: 0px 0px 6px rgba($primary-green, 0.3);
+  }
+}
+
+/* Chips */
+.chip-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.chip {
+  padding: 6px 14px;
+  border-radius: 20px;
+  background: #f2f2f2;
+  border: 1px solid #ddd;
+  cursor: pointer;
+  font-size: 0.85rem;
+  transition: all 0.2s ease;
+  user-select: none;
+
+  &:hover {
+    background: #e7e7e7;
+  }
+}
+
+.chip-selected {
+  background: $primary-green-dark;
+  color: white;
+  border-color: darken($primary-green-dark, 8%);
+}
+
+/* Submit button */
+.submit-btn {
+  background: $primary-green-dark;
+  border: none;
+  font-size: 1rem;
+  border-radius: 10px;
+
+  &:hover {
+    background: darken($primary-green-dark, 6%);
+  }
+}
+
+/* Animation */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(25px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

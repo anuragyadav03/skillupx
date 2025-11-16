@@ -1,0 +1,6 @@
+@use 'colors' as *;
+
+.course-box {
+  border-left: 6px solid $primary-green;
+  border-radius: 12px;
+}

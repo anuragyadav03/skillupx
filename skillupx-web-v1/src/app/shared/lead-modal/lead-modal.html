@@ -1,0 +1,73 @@
+@if (visible()) {
+<div class="modal-backdrop">
+  <div class="modal-box animate-modal">
+
+    <!-- Close button -->
+    <button class="close-btn" (click)="close()">✕</button>
+
+    <h3 class="text-center fw-bold mb-3">Book Your Free Demo</h3>
+    <p class="text-center text-muted mb-4 small">
+      Get personalized guidance and course roadmap from our expert mentors.
+    </p>
+
+    <form (ngSubmit)="submit()">
+
+      <!-- FULL NAME -->
+      <div class="mb-3">
+        <label class="form-label fw-semibold">Full Name</label>
+        <input 
+          class="form-control input-field"
+          name="name"
+          [(ngModel)]="name"
+          placeholder="Enter your name"
+        />
+      </div>
+
+      <!-- EMAIL -->
+      <div class="mb-3">
+        <label class="form-label fw-semibold">Email</label>
+        <input 
+          class="form-control input-field"
+          name="email"
+          [(ngModel)]="email"
+          placeholder="Enter your email"
+        />
+      </div>
+
+      <!-- PHONE -->
+      <div class="mb-3">
+        <label class="form-label fw-semibold">Phone Number</label>
+        <input 
+          class="form-control input-field"
+          name="phone"
+          [(ngModel)]="phone"
+          placeholder="Enter your phone number"
+        />
+      </div>
+
+      <!-- SUBJECTS -->
+      <div class="mb-3">
+        <label class="form-label fw-semibold">Subjects of Interest</label>
+
+        <div class="chip-container mt-2">
+          @for (subject of availableSubjects; track subject) {
+            <span
+              class="chip"
+              [class.chip-selected]="subjects().includes(subject)"
+              (click)="toggleSubject(subject)"
+            >
+              {{ subject }}
+            </span>
+          }
+        </div>
+      </div>
+
+      <!-- Submit -->
+      <button class="btn btn-primary w-100 py-2 submit-btn" type="submit">
+        Submit
+      </button>
+
+    </form>
+  </div>
+</div>
+}

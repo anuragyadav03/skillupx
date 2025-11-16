@@ -1,0 +1,21 @@
+/* SkillupX Global Brand Colors */
+$primary-green: #2E9F41;
+$primary-green-dark: #1F7A31;
+$primary-green-light: #45C15A;
+
+$text-dark: #1A1A1A;
+$bg-light: #F8F9FA;
+$white: #FFFFFF;
+
+/* Gradients */
+$skillupx-gradient: linear-gradient(135deg, $primary-green, $primary-green-dark);
+
+
+:root {
+  --skillupx-primary: #2E9F41;
+  --skillupx-primary-dark: #1F7A31;
+  --skillupx-primary-light: #45C15A;
+
+  --skillupx-bg-light: #F8F9FA;
+  --skillupx-text-dark: #1A1A1A;
+}

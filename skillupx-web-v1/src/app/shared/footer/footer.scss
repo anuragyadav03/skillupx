@@ -1,0 +1,64 @@
+@use 'colors' as *;
+
+.footer {
+  background: #F3F4F6;
+  padding: 60px 0 30px 0;
+  border-top: 1px solid rgba(0, 0, 0, 0.06);
+
+  .footer-logo {
+      height: 38px;
+  }
+
+  .footer-brand h5 {
+    color: $primary-green-dark;
+    font-weight: 700;
+  }
+
+  .footer-text {
+    opacity: 0.75;
+    font-size: 0.95rem;
+    max-width: 260px;
+  }
+
+  .footer-heading {
+    font-weight: 700;
+    margin-bottom: 10px;
+    color: $primary-green-dark;
+  }
+
+  a {
+    text-decoration: none;
+    color: $text-dark;
+    opacity: 0.75;
+    font-size: 0.95rem;
+
+    &:hover {
+      opacity: 1;
+      color: $primary-green;
+    }
+  }
+
+  .footer-divider {
+    height: 1px;
+    background: rgba(0,0,0,0.08);
+    margin: 20px 0;
+  }
+
+  .footer-bottom {
+    opacity: 0.6;
+    font-size: 0.85rem;
+  }
+
+  /* Social Icons */
+  .footer-social .icon {
+    width: 22px;
+    height: 22px;
+    margin-right: 14px;
+    color: $primary-green-dark;
+    transition: 0.2s;
+
+    &:hover {
+      color: $primary-green;
+    }
+  }
+}
