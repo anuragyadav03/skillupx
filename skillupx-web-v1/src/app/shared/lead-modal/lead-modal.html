@@ -1,73 +1,92 @@
 @if (visible()) {
 <div class="modal-backdrop">
+
+  <!-- LOADER -->
+  @if (loading()) {
+    <app-loading-screen></app-loading-screen>
+  }
+
   <div class="modal-box animate-modal">
 
-    <!-- Close button -->
+    <!-- CLOSE BUTTON -->
     <button class="close-btn" (click)="close()">✕</button>
 
-    <h3 class="text-center fw-bold mb-3">Book Your Free Demo</h3>
-    <p class="text-center text-muted mb-4 small">
-      Get personalized guidance and course roadmap from our expert mentors.
-    </p>
-
-    <form (ngSubmit)="submit()">
-
-      <!-- FULL NAME -->
-      <div class="mb-3">
-        <label class="form-label fw-semibold">Full Name</label>
-        <input 
-          class="form-control input-field"
-          name="name"
-          [(ngModel)]="name"
-          placeholder="Enter your name"
-        />
+    <!-- SUCCESS MESSAGE -->
+    @if (success()) {
+      <div class="text-center p-4">
+        <h3 class="fw-bold text-success">Thank You!</h3>
+        <p class="mt-2">
+          Your request has been submitted.<br />
+          Our team will reach out to you shortly.
+        </p>
       </div>
+    }
 
-      <!-- EMAIL -->
-      <div class="mb-3">
-        <label class="form-label fw-semibold">Email</label>
-        <input 
-          class="form-control input-field"
-          name="email"
-          [(ngModel)]="email"
-          placeholder="Enter your email"
-        />
-      </div>
+    <!-- FORM (only show if not successful) -->
+    @if (!success()) {
+      <h3 class="text-center fw-bold mb-3">Book Your Free Demo</h3>
+      <p class="text-center text-muted mb-4 small">
+        Get personalized guidance and course roadmap from our expert mentors.
+      </p>
 
-      <!-- PHONE -->
-      <div class="mb-3">
-        <label class="form-label fw-semibold">Phone Number</label>
-        <input 
-          class="form-control input-field"
-          name="phone"
-          [(ngModel)]="phone"
-          placeholder="Enter your phone number"
-        />
-      </div>
+      <form (ngSubmit)="submit()">
 
-      <!-- SUBJECTS -->
-      <div class="mb-3">
-        <label class="form-label fw-semibold">Subjects of Interest</label>
-
-        <div class="chip-container mt-2">
-          @for (subject of availableSubjects; track subject) {
-            <span
-              class="chip"
-              [class.chip-selected]="subjects().includes(subject)"
-              (click)="toggleSubject(subject)"
-            >
-              {{ subject }}
-            </span>
-          }
+        <!-- FULL NAME -->
+        <div class="mb-3">
+          <label class="form-label fw-semibold">Full Name</label>
+          <input 
+            class="form-control input-field"
+            name="name"
+            [(ngModel)]="name"
+            placeholder="Enter your name"
+          />
         </div>
-      </div>
 
-      <!-- Submit -->
-      <button class="btn btn-primary w-100 py-2 submit-btn" type="submit">
-        Submit
-      </button>
+        <!-- EMAIL -->
+        <div class="mb-3">
+          <label class="form-label fw-semibold">Email</label>
+          <input 
+            class="form-control input-field"
+            name="email"
+            [(ngModel)]="email"
+            placeholder="Enter your email"
+          />
+        </div>
 
-    </form>
+        <!-- PHONE -->
+        <div class="mb-3">
+          <label class="form-label fw-semibold">Phone Number</label>
+          <input 
+            class="form-control input-field"
+            name="phone"
+            [(ngModel)]="phone"
+            placeholder="Enter your phone number"
+          />
+        </div>
+
+        <!-- SUBJECTS -->
+        <div class="mb-3">
+          <label class="form-label fw-semibold">Subjects of Interest</label>
+
+          <div class="chip-container mt-2">
+            @for (subject of availableSubjects; track subject) {
+              <span
+                class="chip"
+                [class.chip-selected]="subjects().includes(subject)"
+                (click)="toggleSubject(subject)"
+              >
+                {{ subject }}
+              </span>
+            }
+          </div>
+        </div>
+
+        <button class="btn btn-primary w-100 py-2 submit-btn" type="submit">
+          Submit
+        </button>
+
+      </form>
+    }
   </div>
 </div>
 }
