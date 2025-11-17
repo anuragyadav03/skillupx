@@ -94,6 +94,7 @@ app.post("/lead", async (req, res) => {
         <p><strong>Submitted At:</strong> ${timestamp}</p>
       `,
     });
+    console.log("Email is sent")
 
     return res.json({ success: true, message: "Lead saved & email sent." });
 
