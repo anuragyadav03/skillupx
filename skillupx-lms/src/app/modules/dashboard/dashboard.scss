@@ -1,0 +1,11 @@
+.dashboard {
+  .course-card {
+    transition: 0.25s ease;
+    border-radius: 12px;
+
+    &:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 6px 16px rgba(0, 0, 0, 0.12);
+    }
+  }
+}

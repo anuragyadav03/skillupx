@@ -1,0 +1,83 @@
+<div class="container py-4">
+  <div class="card shadow-sm mx-auto" style="max-width: 750px;">
+    <div class="card-body">
+
+      <h3 class="mb-3">{{ isEdit ? 'Edit Chapter' : 'Add Chapter' }}</h3>
+
+      <form [formGroup]="form" (ngSubmit)="save()">
+
+        <!-- CHAPTER NAME -->
+        <mat-form-field appearance="outline" class="w-100 mb-3">
+          <mat-label>Chapter Name</mat-label>
+          <input matInput formControlName="chapter_name">
+        </mat-form-field>
+
+        <!-- TITLE -->
+        <mat-form-field appearance="outline" class="w-100 mb-3">
+          <mat-label>Chapter Title</mat-label>
+          <input matInput formControlName="title">
+        </mat-form-field>
+
+        <!-- CONTENT TYPE -->
+        <mat-form-field appearance="outline" class="w-100 mb-3">
+          <mat-label>Content Type</mat-label>
+          <mat-select formControlName="content_type" (selectionChange)="onTypeChange()">
+            <mat-option value="VIDEO">Video</mat-option>
+            <mat-option value="RESOURCE">Resource</mat-option>
+            <mat-option value="TEST">Test</mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <!-- VIDEO URL -->
+        <mat-form-field
+          *ngIf="form.value.content_type === 'VIDEO'"
+          appearance="outline"
+          class="w-100 mb-3">
+          <mat-label>Video URL</mat-label>
+          <input matInput formControlName="video_url">
+        </mat-form-field>
+
+        <!-- RESOURCE PATH -->
+        <mat-form-field
+          *ngIf="form.value.content_type === 'RESOURCE'"
+          appearance="outline"
+          class="w-100 mb-3">
+          <mat-label>Resource File Name</mat-label>
+          <input matInput formControlName="resource_path">
+        </mat-form-field>
+
+        <!-- TEST QUESTIONS COUNT -->
+        <mat-form-field
+          *ngIf="form.value.content_type === 'TEST'"
+          appearance="outline"
+          class="w-100 mb-3">
+          <mat-label>Number of Test Questions</mat-label>
+          <input matInput type="number" formControlName="test_questions">
+        </mat-form-field>
+
+        <!-- TIMED -->
+        <mat-checkbox formControlName="timed" class="mb-3">
+          Timed Test?
+        </mat-checkbox>
+
+        <!-- ACTIVE -->
+        <mat-checkbox formControlName="active" class="mb-3">
+          Active
+        </mat-checkbox>
+
+        <!-- BUTTONS -->
+        <div class="d-flex gap-2 mt-3">
+          <button mat-raised-button color="primary" type="submit" [disabled]="saving">
+            {{ saving ? 'Saving...' : (isEdit ? 'Update Chapter' : 'Save Chapter') }}
+          </button>
+
+          <button mat-raised-button color="warn" type="button" (click)="cancel()">
+            Cancel
+          </button>
+        </div>
+
+      </form>
+
+    </div>
+  </div>
+</div>

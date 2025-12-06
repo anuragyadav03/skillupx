@@ -1,115 +1,92 @@
-import express from "express";
-import cors from "cors";
-import bodyParser from "body-parser";
-import { google } from "googleapis";
-import fs from "fs";
-import nodemailer from "nodemailer";
-import dotenv from "dotenv";
+// index.js
+import 'dotenv/config';
+const express = require('express');
+const helmet = require('helmet');
+const rateLimit = require('express-rate-limit');
+const cors = require('cors');
+const db = require('./db');
+const logger = require('./config/logger');
 
-dotenv.config(); // Load .env variables
+const requestLogger = require('./middleware/requestLogger');
+const authRoutes = require('./routes/auth.routes');
+const authenticate = require('./middleware/auth');
 
 const app = express();
-app.use(cors());
-app.use(bodyParser.json());
+const port = process.env.PORT || 4000;
 
-// -----------------------------------------------------
-// LOAD ENVIRONMENT VARIABLES
-// -----------------------------------------------------
+// ---------------------------------
+// Middleware
+// ---------------------------------
+app.use(helmet());
+app.use(cors({ origin: true }));
+app.use(express.json());
+app.use(requestLogger);
 
-const GOOGLE_SHEET_ID = process.env.GOOGLE_SHEET_ID;
-const EMAIL_USER = process.env.EMAIL_USER;
-const EMAIL_PASS = process.env.EMAIL_PASS;
-const LEAD_RECEIVER_EMAIL = process.env.LEAD_RECEIVER_EMAIL;
-const LEAD_CC_EMAIL = process.env.LEAD_CC_EMAIL || "";
+app.use(
+  rateLimit({
+    windowMs: 15 * 60 * 1000,
+    max: 100,
+  })
+);
 
-const PORT = process.env.PORT || 4000;
+// ---------------------------------
+// Health check
+// ---------------------------------
+app.get('/health', (req, res) => res.json({ status: 'ok' }));
 
-// -----------------------------------------------------
-// GOOGLE SHEETS CONFIG
-// -----------------------------------------------------
+// ---------------------------------
+// API Routes
+// ---------------------------------
+app.use('/api/auth', authRoutes);
 
-const credentials = JSON.parse(fs.readFileSync("credentials.json", "utf8"));
-
-const auth = new google.auth.GoogleAuth({
-  credentials,
-  scopes: ["https://www.googleapis.com/auth/spreadsheets"],
+// protected route sample
+app.get('/api/me', authenticate, (req, res) => {
+  res.json({ user: req.user });
 });
 
-const sheets = google.sheets({ version: "v4", auth });
-
-// -----------------------------------------------------
-// NODEMAILER CONFIG
-// -----------------------------------------------------
-
-const transporter = nodemailer.createTransport({
-  service: "gmail",
-  auth: {
-    user: EMAIL_USER,
-    pass: EMAIL_PASS,
-  },
+// ---------------------------------
+// Global Error Handler
+// ---------------------------------
+app.use((err, req, res, next) => {
+  logger.error('Unhandled error', {
+    message: err.message,
+    stack: err.stack,
+  });
+  res.status(500).json({ message: 'Unexpected error' });
 });
 
-// -----------------------------------------------------
-// SAVE LEAD API
-// -----------------------------------------------------
-
-app.post("/lead", async (req, res) => {
+// ---------------------------------
+// Server + DB Startup
+// ---------------------------------
+const start = async () => {
   try {
-    const { name, email, phone, subjects } = req.body;
-
-    if (!name || !email || !phone) {
-      return res.status(400).json({ error: "Name, Email, Phone are required." });
-    }
-
-    // Format timestamp: DD-MM-YYYY HH:mm:ss
-    const timestamp = new Date()
-      .toLocaleString("en-IN", {
-        timeZone: "Asia/Kolkata",
-        hour12: false,
-      })
-      .replace(/\//g, "-");
-
-    // Write to Google Sheet
-    await sheets.spreadsheets.values.append({
-      spreadsheetId: GOOGLE_SHEET_ID,
-      range: "Sheet1!A:E",
-      valueInputOption: "USER_ENTERED",
-      requestBody: {
-        values: [[name, email, phone, subjects || "Not Provided", timestamp]],
-      },
-    });
-
-    // Send Email
-    await transporter.sendMail({
-      from: `SkillupX Leads <${EMAIL_USER}>`,
-      to: LEAD_RECEIVER_EMAIL,
-      cc: LEAD_CC_EMAIL || undefined,
-      subject: "🔥 New SkillupX Lead Received",
-      html: `
-        <h2>New Lead Submitted</h2>
-        <p><strong>Name:</strong> ${name}</p>
-        <p><strong>Email:</strong> ${email}</p>
-        <p><strong>Phone:</strong> ${phone}</p>
-        <p><strong>Subjects:</strong> ${subjects || "Not Provided"}</p>
-        <p><strong>Submitted At:</strong> ${timestamp}</p>
-      `,
-    });
-    console.log("Email is sent")
-
-    return res.json({ success: true, message: "Lead saved & email sent." });
-
-  } catch (error) {
-    console.error("❌ ERROR saving lead:", error);
-    return res.status(500).json({ error: "Failed to save lead." });
+    const { rows } = await db.query('SELECT NOW()');
+    logger.info('Database connected: ' + rows[0].now);
+  } catch (err) {
+    logger.error('Failed to connect to DB', { message: err.message });
+    process.exit(1);
   }
-});
 
-// -----------------------------------------------------
-// START SERVER
-// -----------------------------------------------------
+  const server = app.listen(port, () =>
+    logger.info(`Server running on port ${port}`)
+  );
 
-app.listen(PORT, () => {
-  console.log(`🚀 SkillupX Lead Server is running on http://localhost:${PORT}`);
-  console.log("✔ .env variables loaded successfully");
-  console.log("✔ Google Sheet + Email services ready");
-});
+  // graceful shutdown
+  const shutdown = () => {
+    logger.info('Shutting down...');
+
+    server.close(() => {
+      logger.info('HTTP server closed');
+
+      db.pool.end(() => {
+        logger.info('DB pool closed');
+        process.exit(0);
+      });
+    });
+  };
+
+  process.on('SIGINT', shutdown);
+  process.on('SIGTERM', shutdown);
+};
+
+start();

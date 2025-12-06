@@ -1,3 +1,5 @@
+import 'zone.js';   // <-- REQUIRED to enable Angular’s change detection
+
 import { bootstrapApplication } from '@angular/platform-browser';
 import { appConfig } from './app/app.config';
 import { App } from './app/app';

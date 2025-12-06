@@ -1,0 +1,17 @@
+# build stage (optional if you transpile or need deps installed in separate stage)
+FROM node:22-alpine AS base
+WORKDIR /usr/src/app
+ENV NODE_ENV=production
+
+# copy package.json and package-lock first for better caching
+COPY package*.json ./
+RUN npm ci --omit=dev
+
+# copy app
+COPY . .
+
+# Expose port (make sure matches your app)
+EXPOSE 4000
+
+# start app
+CMD ["node", "src/server.js"]
