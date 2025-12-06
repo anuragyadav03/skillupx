@@ -1,0 +1,90 @@
+<div class="container mt-4 mb-5">
+  <h2 class="mb-4">
+    {{ id ? 'Edit Instructor' : 'Add Instructor' }}
+  </h2>
+
+  <form [formGroup]="form" (ngSubmit)="save()" class="w-100">
+
+    <div class="row">
+
+      <!-- NAME -->
+      <div class="col-md-6 mb-3">
+        <mat-form-field appearance="outline" class="w-100">
+          <mat-label>Name</mat-label>
+          <input title="name" matInput formControlName="name" />
+
+          <mat-error *ngIf="name?.touched && name?.invalid">
+            Name is required
+          </mat-error>
+        </mat-form-field>
+      </div>
+
+      <!-- EMAIL -->
+      <div class="col-md-6 mb-3">
+        <mat-form-field appearance="outline" class="w-100">
+          <mat-label>Email</mat-label>
+          <input title="email" matInput type="email" formControlName="contact_email" />
+
+          <mat-error *ngIf="contact_email?.touched && contact_email?.invalid">
+            <span *ngIf="contact_email?.errors?.['required']">Email is required</span>
+            <span *ngIf="contact_email?.errors?.['email']">Invalid email format</span>
+          </mat-error>
+        </mat-form-field>
+      </div>
+
+      <!-- PHONE -->
+      <div class="col-md-6 mb-3">
+        <mat-form-field appearance="outline" class="w-100">
+          <mat-label>Phone</mat-label>
+          <input matInput formControlName="phone" placeholder="+91 9876543210" />
+
+          <mat-error *ngIf="phone?.touched && phone?.invalid">
+            Invalid phone format
+          </mat-error>
+        </mat-form-field>
+      </div>
+
+      <!-- PASSWORD -->
+      <div class="col-md-6 mb-3">
+        <mat-form-field appearance="outline" class="w-100">
+          <mat-label>Password</mat-label>
+          <input matInput type="password" formControlName="password" placeholder="******" />
+
+          <mat-error *ngIf="password?.touched && password?.invalid">
+            <span *ngIf="password?.errors?.['required']">Password is required</span>
+            <span *ngIf="password?.errors?.['minlength']">Minimum 6 characters</span>
+          </mat-error>
+        </mat-form-field>
+      </div>
+
+      <!-- BIO -->
+      <div class="col-12 mb-3">
+        <mat-form-field appearance="outline" class="w-100">
+          <mat-label>Bio</mat-label>
+          <textarea title="Bio" matInput rows="4" formControlName="bio"></textarea>
+        </mat-form-field>
+      </div>
+
+      <!-- AVATAR URL -->
+      <div class="col-12 mb-3">
+        <mat-form-field appearance="outline" class="w-100">
+          <mat-label>Avatar URL</mat-label>
+          <input matInput formControlName="avatar_url" placeholder="https://image.com/avatar.jpg" />
+        </mat-form-field>
+      </div>
+    </div>
+
+    <!-- ACTION BUTTONS -->
+    <div class="d-flex gap-3 mt-4">
+      <button mat-flat-button color="primary" [disabled]="saving || form.invalid">
+        <span *ngIf="!saving">Save</span>
+        <mat-spinner *ngIf="saving" diameter="22"></mat-spinner>
+      </button>
+
+      <button mat-stroked-button color="warn" type="button" (click)="cancel()">
+        Cancel
+      </button>
+    </div>
+
+  </form>
+</div>

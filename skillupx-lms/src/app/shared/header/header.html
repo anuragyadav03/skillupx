@@ -1,0 +1,50 @@
+<mat-toolbar color="primary" class="shadow-sm border-bottom px-1">
+  <div class="container-fluid d-flex justify-content-between align-items-center">
+
+    <!-- Brand -->
+    <div class="d-flex align-items-center ml-2">
+      <h1 class="logo">SkillUpX</h1>
+    </div>
+
+    <!-- Desktop Navigation -->
+    <div class="d-flex align-items-center gap-4">
+
+      <!-- Top Nav Links (only visible if logged in) -->
+      <ng-container *ngIf="isLoggedIn">
+        <button mat-button (click)="navigate('dashboard')">Dashboard</button>
+        <button mat-button (click)="navigate('peers')">Peers</button>
+        <!-- <button mat-button (click)="navigate('courses')">Courses</button> -->
+      </ng-container>
+
+      <!-- Login Button -->
+      <button
+        *ngIf="!isLoggedIn"
+        matButton="outlined"
+        (click)="redirectToLogin()"
+        class="d-flex align-items-center"
+      >
+        <mat-icon class="me-1">person</mat-icon>
+        <span class="d-none d-sm-inline">Login</span>
+      </button>
+
+      <!-- Profile Menu -->
+      <button
+        *ngIf="isLoggedIn"
+        mat-raised-button
+        [matMenuTriggerFor]="profileMenu"
+        class="d-flex align-items-center"
+      >
+        <mat-icon class="me-1">person</mat-icon>
+        <span class="d-none d-sm-inline">Profile</span>
+      </button>
+
+      <mat-menu #profileMenu="matMenu">
+        <button mat-menu-item (click)="navigate('profile')">My Profile</button>
+        <button mat-menu-item (click)="navigate('blogs')">My Blogs</button>
+        <mat-divider></mat-divider>
+        <button mat-menu-item (click)="navigate('logout')">Logout</button>
+      </mat-menu>
+
+    </div>
+  </div>
+</mat-toolbar>

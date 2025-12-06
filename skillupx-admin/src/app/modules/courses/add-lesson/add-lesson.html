@@ -1,0 +1,63 @@
+<div class="container py-4">
+  <div class="card shadow-sm mx-auto" style="max-width: 750px;">
+    <div class="card-body">
+
+      <h3 class="mb-3">
+        {{ isEdit ? 'Edit Lesson' : 'Add Lesson' }}
+      </h3>
+
+      <form [formGroup]="form" (ngSubmit)="save()">
+
+        <!-- TITLE -->
+        <mat-form-field appearance="outline" class="w-100 mb-3">
+          <mat-label>Lesson Title</mat-label>
+          <input matInput formControlName="title" />
+        </mat-form-field>
+
+        <!-- SUMMARY -->
+        <mat-form-field appearance="outline" class="w-100 mb-3">
+          <mat-label>Summary</mat-label>
+          <textarea matInput rows="3" formControlName="summary"></textarea>
+        </mat-form-field>
+
+        <!-- SLUG -->
+        <mat-form-field appearance="outline" class="w-100 mb-3">
+          <mat-label>Slug (optional)</mat-label>
+          <input matInput formControlName="slug" />
+        </mat-form-field>
+
+        <div class="row">
+          <div class="col-md-6">
+
+            <!-- ORDER NUMBER -->
+            <mat-form-field appearance="outline" class="w-100 mb-3">
+              <mat-label>Order Number</mat-label>
+              <input matInput type="number" formControlName="order_number" />
+            </mat-form-field>
+
+          </div>
+
+          <div class="col-md-6">
+
+            <!-- DURATION -->
+            <mat-form-field appearance="outline" class="w-100 mb-3">
+              <mat-label>Duration (Seconds)</mat-label>
+              <input matInput type="number" formControlName="duration_seconds" />
+            </mat-form-field>
+
+          </div>
+        </div>
+
+        <div class="d-flex gap-2 mt-3">
+          <button mat-raised-button color="primary" type="submit" [disabled]="saving">
+            {{ saving ? 'Saving...' : (isEdit ? 'Update Lesson' : 'Save Lesson') }}
+          </button>
+
+          <button mat-raised-button type="button" color="warn" (click)="cancel()">Cancel</button>
+        </div>
+
+      </form>
+
+    </div>
+  </div>
+</div>

@@ -1,0 +1,55 @@
+<mat-card class="profile-card shadow-lg">
+  <div class="d-flex flex-column flex-md-row align-items-center gap-4 p-3">
+    <img
+      [src]="userProfile || imgurl"
+      alt="Profile"
+      class="rounded-circle profile-img"
+    />
+
+    <div class="flex-grow-1">
+      <h2 class="mb-0">{{ userProfile }}</h2>
+      <p class="text-muted">{{ userProfile?.email }}</p>
+    </div>
+
+    <div class="ms-auto">
+      <button mat-flat-button color="primary" (click)="setEditing()">
+        <mat-icon>edit</mat-icon>
+        {{ editing ? 'Cancel' : 'Edit' }}
+      </button>
+    </div>
+  </div>
+
+  <form
+    [formGroup]="profileForm"
+    (ngSubmit)="updateProfile()"
+    *ngIf="editing"
+    class="p-3"
+  >
+    <mat-form-field class="w-100 mb-3" appearance="outline">
+      <mat-label>Profile Image URL</mat-label>
+      <input matInput placeholder="Enter image link" formControlName="profile" />
+    </mat-form-field>
+
+    <mat-form-field class="w-100 mb-3" appearance="outline">
+      <mat-label>Username</mat-label>
+      <input matInput placeholder="Username" formControlName="username" />
+    </mat-form-field>
+
+    <mat-form-field class="w-100 mb-4" appearance="outline">
+      <mat-label>Email</mat-label>
+      <input matInput placeholder="Email" formControlName="email" [disabled]="true" />
+    </mat-form-field>
+
+    <div class="d-flex justify-content-end gap-2">
+      <button mat-stroked-button type="button" color="warn" (click)="goBack()">
+        <mat-icon>arrow_back</mat-icon>
+        Back
+      </button>
+
+      <button mat-flat-button color="accent" type="submit" [disabled]="!profileForm.valid">
+        <mat-icon>save</mat-icon>
+        Save Changes
+      </button>
+    </div>
+  </form>
+</mat-card>

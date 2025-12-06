@@ -1,0 +1,44 @@
+version: "3.8"
+services:
+  db:
+    image: postgres:15
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: myuser
+      POSTGRES_PASSWORD: mypass
+      POSTGRES_DB: mydb
+    volumes:
+      - db-data:/var/lib/postgresql/data
+      # initial SQL scripts can be placed in ./db/init and mounted here:
+      - ./db/init:/docker-entrypoint-initdb.d:ro
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U myuser"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - appnet
+
+  app:
+    build: .
+    depends_on:
+      db:
+        condition: service_healthy
+    restart: unless-stopped
+    environment:
+      PORT: 4000
+      DATABASE_URL: postgres://myuser:mypass@db:5432/mydb
+      JWT_SECRET: replace_with_secret
+      JWT_EXPIRES_IN: 1h
+    ports:
+      - "4000:4000"
+    volumes:
+      - ./:/usr/src/app:ro
+    networks:
+      - appnet
+
+volumes:
+  db-data:
+
+networks:
+  appnet:

@@ -1,0 +1,58 @@
+<div class="container py-4">
+
+  <!-- Page Header -->
+  <div class="d-flex justify-content-between align-items-center mb-4">
+    <h2 class="m-0">Instructors</h2>
+
+    <button mat-flat-button color="primary" (click)="add()">
+      <mat-icon>person_add</mat-icon>
+      Add Instructor
+    </button>
+  </div>
+
+  <!-- Material Table -->
+  <mat-card class="p-3">
+
+    <table mat-table [dataSource]="instructors" class="mat-elevation-z1 w-100">
+
+      <!-- Name Column -->
+      <ng-container matColumnDef="name">
+        <th mat-header-cell *matHeaderCellDef> Name </th>
+        <td mat-cell *matCellDef="let i"> {{ i.name }} </td>
+      </ng-container>
+
+      <!-- Email Column -->
+      <ng-container matColumnDef="email">
+        <th mat-header-cell *matHeaderCellDef> Email </th>
+        <td mat-cell *matCellDef="let i"> {{ i.contact_email }} </td>
+      </ng-container>
+
+      <!-- Created Column -->
+      <ng-container matColumnDef="created_at">
+        <th mat-header-cell *matHeaderCellDef> Created </th>
+        <td mat-cell *matCellDef="let i"> {{ i.created_at | date : 'short' }} </td>
+      </ng-container>
+
+      <!-- Actions Column -->
+      <ng-container matColumnDef="actions">
+        <th mat-header-cell *matHeaderCellDef class="text-end"> Actions </th>
+        <td mat-cell *matCellDef="let i" class="text-end">
+          <button
+            mat-icon-button
+            matTooltip="Edit Instructor"
+            color="primary"
+            (click)="edit(i)"
+          >
+            <mat-icon>edit</mat-icon>
+          </button>
+        </td>
+      </ng-container>
+
+      <!-- Header + Row Render -->
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+
+    </table>
+
+  </mat-card>
+</div>

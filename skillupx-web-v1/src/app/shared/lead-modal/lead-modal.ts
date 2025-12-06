@@ -64,7 +64,8 @@ export class LeadModal {
       source: 'Website Lead'
     };
 
-    this.http.post('https://skillupx-makeshift-server.vercel.app/lead', payload).subscribe({
+    // this.http.post('https://skillupx-makeshift-server.vercel.app/lead', payload).subscribe({
+    this.http.post('http://localhost:4000/lead', payload).subscribe({
       next: () => {
         console.log('Lead Saved:', payload);
 
